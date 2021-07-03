@@ -45,14 +45,16 @@ class CartModel extends ChangeNotifier {
   }
 
   void changePickUp(Item item) {
-    item.pickup = !item.pickup;
+    item.isPicked = !item.isPicked;
     notifyListeners();
   }
 
   int _calcSumPrice() {
     int sumPrice = 0;
     for (int i = 0; i < this.items.length; i++) {
-      sumPrice += _items[i].price;
+      if (_items[i].isPicked) {
+        sumPrice += _items[i].price;
+      }
     }
     return sumPrice;
   }
@@ -60,7 +62,9 @@ class CartModel extends ChangeNotifier {
   int _calcSumDiscount() {
     int sumDiscount = 0;
     for (int i = 0; i < this.items.length; i++) {
-      sumDiscount += (_items[i].price * _items[i].discount / 100).round();
+      if (_items[i].isPicked) {
+        sumDiscount += (_items[i].price * _items[i].discount / 100).round();
+      }
     }
     return sumDiscount;
   }
