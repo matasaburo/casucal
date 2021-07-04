@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:casucal/models/cart.dart';
 import 'package:casucal/models/item.dart';
 import 'package:casucal/screens/casu_cal_icons.dart';
-//import 'package:intl/intl.dart';
 
 class MyCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text('CasuCal'), //, style: Theme.of(context).textTheme.headline1),
+        title: Text(
+          'CasuCal',
+        ),
       ),
       body: Container(
         color: Colors.white,
         child: Column(
           children: [
             CartTotal(),
-//            const Divider(height: 4, color: Colors.black),
             Expanded(
               child: CartList(),
             ),
@@ -42,7 +43,7 @@ class _CartTotal extends State<CartTotal> {
     final double rowHeight = 60.0;
 
     String hexString = "45a3df"; //color code
-    // String priceText = NumberFormat('#,##0').format(cart.sumDiscountedPrice.toString());
+    var priceFormatter = NumberFormat('#,###');
 
     return Container(
       color: Color(int.parse("0xff$hexString")),
@@ -55,7 +56,7 @@ class _CartTotal extends State<CartTotal> {
             height: rowHeight,
             child: Center(
               child: Text(
-                'Total: ¥${cart.sumDiscountedPrice.toString()}',
+                'Total: ¥${priceFormatter.format(cart.sumDiscountedPrice).toString()}-',
                 textAlign: TextAlign.start,
                 style: const TextStyle(
                   color: Colors.white,
@@ -111,7 +112,7 @@ class _AddItemButton extends StatelessWidget {
           discount: 0,
           isPicked: true,
           priceController: TextEditingController(),
-          discountController: TextEditingController(),
+          // discountController: TextEditingController(),
         ));
       },
       child: Icon(
@@ -159,7 +160,7 @@ class _ItemRow extends State<_ItemRowStatefullWidget> {
     var cart = context.read<CartModel>();
     final Size size = MediaQuery.of(context).size;
     final double rowHeight = 50.0;
-    double fontsize = 15.0;
+    double fontSize = 15.0;
 
     return Container(
       margin: EdgeInsets.only(top: 10),
@@ -181,19 +182,28 @@ class _ItemRow extends State<_ItemRowStatefullWidget> {
             width: 0.4 * size.width,
             height: rowHeight,
             child: TextFormField(
-              controller: cart.items[index].priceController, // _controller,
+              controller: cart.items[index].priceController,
               enabled: true,
               keyboardType: TextInputType.number,
-              style: TextStyle(color: Colors.black, fontSize: fontsize),
+              inputFormatters: [
+                ThousandsFormatter(),
+              ],
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: fontSize,
+              ),
               decoration: InputDecoration(
+                prefixText: '¥',
+                suffixText: '-',
                 border: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.pink,
                   ),
                 ),
-                prefixIcon: Text('￥'),
+                // prefixIcon: Text('￥'),
               ),
               onChanged: (price) {
+                (price);
                 cart.setItemPrice(cart.items[index], price);
               },
             ),
@@ -209,10 +219,9 @@ class _ItemRow extends State<_ItemRowStatefullWidget> {
               icon: const Icon(Icons.arrow_drop_down),
               iconSize: 0,
               elevation: 4,
-              // isExpanded: false,
-              style: const TextStyle(
-                color: Colors.blue,
-                fontSize: 10.0,
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: fontSize,
               ),
               decoration: InputDecoration(
                 border: InputBorder.none,

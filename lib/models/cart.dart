@@ -35,7 +35,7 @@ class CartModel extends ChangeNotifier {
       notifyListeners();
       return;
     }
-    item.price = int.parse(price);
+    item.price = int.parse(price.replaceAll(',', ''));
     notifyListeners();
   }
 

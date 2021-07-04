@@ -6,7 +6,7 @@ class Item {
   int discount = 0;
   bool isPicked = true;
   TextEditingController priceController = TextEditingController();
-  TextEditingController discountController = TextEditingController();
+  // TextEditingController discountController = TextEditingController();
 
   Item({
     required String category,
@@ -14,6 +14,6 @@ class Item {
     required int discount,
     required bool isPicked,
     required TextEditingController priceController,
-    required TextEditingController discountController,
+    // required TextEditingController discountController,
   });
 }
