@@ -46,7 +46,7 @@ class _CartTotal extends State<CartTotal> {
     var priceFormatter = NumberFormat('#,###');
 
     return Container(
-      color: Color(int.parse("0xff$hexString")),
+      color: Colors.pinkAccent[100],
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -105,6 +105,7 @@ class _AddItemButton extends StatelessWidget {
     var cart = context.read<CartModel>();
 
     return FloatingActionButton(
+      backgroundColor: Colors.pink[500],
       onPressed: () {
         cart.add(Item(
           category: "other",
@@ -166,7 +167,7 @@ class _ItemRow extends State<_ItemRowStatefullWidget> {
       margin: EdgeInsets.only(top: 10),
       child: Row(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
             width: 0.1 * size.width,
@@ -179,7 +180,7 @@ class _ItemRow extends State<_ItemRowStatefullWidget> {
             ),
           ),
           Container(
-            width: 0.4 * size.width,
+            width: 0.5 * size.width,
             height: rowHeight,
             child: TextFormField(
               controller: cart.items[index].priceController,
@@ -207,9 +208,6 @@ class _ItemRow extends State<_ItemRowStatefullWidget> {
                 cart.setItemPrice(cart.items[index], price);
               },
             ),
-          ),
-          SizedBox(
-            width: 0.05 * size.width,
           ),
           Container(
             width: 0.25 * size.width,
@@ -240,7 +238,8 @@ class _ItemRow extends State<_ItemRowStatefullWidget> {
                 cart.items[index].isPicked
                     ? Icons.favorite
                     : Icons.favorite_border,
-                color: cart.items[index].isPicked ? Colors.red : null,
+                color:
+                    cart.items[index].isPicked ? Colors.pinkAccent[100] : null,
               ),
               onPressed: () {
                 cart.changePickUp(cart.items[index]);
@@ -253,47 +252,57 @@ class _ItemRow extends State<_ItemRowStatefullWidget> {
   }
 
   void setDiscountList() {
-    double fontsize = 15.0;
+    double fontsize = 10.0;
     _discountList
       ..add(DropdownMenuItem(
-        child: Text('No Discount', style: TextStyle(fontSize: fontsize)),
+        child: Text('No Discount',
+            style: TextStyle(fontFamily: "Popmagic", fontSize: fontsize)),
         value: 0,
       ))
       ..add(DropdownMenuItem(
-        child: Text('10% OFF', style: TextStyle(fontSize: fontsize)),
+        child: Text('10% OFF',
+            style: TextStyle(fontFamily: "Popmagic", fontSize: fontsize)),
         value: 10,
       ))
       ..add(DropdownMenuItem(
-        child: Text('15% OFF', style: TextStyle(fontSize: fontsize)),
+        child: Text('15% OFF',
+            style: TextStyle(fontFamily: "Popmagic", fontSize: fontsize)),
         value: 15,
       ))
       ..add(DropdownMenuItem(
-        child: Text('20% OFF', style: TextStyle(fontSize: fontsize)),
+        child: Text('20% OFF',
+            style: TextStyle(fontFamily: "Popmagic", fontSize: fontsize)),
         value: 20,
       ))
       ..add(DropdownMenuItem(
-        child: Text('25% OFF', style: TextStyle(fontSize: fontsize)),
-        value: 25,
-      ))
-      ..add(DropdownMenuItem(
-        child: Text('30% OFF', style: TextStyle(fontSize: fontsize)),
+        child: Text('30% OFF',
+            style: TextStyle(fontFamily: "Popmagic", fontSize: fontsize)),
         value: 30,
       ))
       ..add(DropdownMenuItem(
-        child: Text('35% OFF', style: TextStyle(fontSize: fontsize)),
-        value: 35,
-      ))
-      ..add(DropdownMenuItem(
-        child: Text('40% OFF', style: TextStyle(fontSize: fontsize)),
+        child: Text('40% OFF',
+            style: TextStyle(fontFamily: "Popmagic", fontSize: fontsize)),
         value: 40,
       ))
       ..add(DropdownMenuItem(
-        child: Text('45% OFF', style: TextStyle(fontSize: fontsize)),
-        value: 45,
+        child: Text('50% OFF',
+            style: TextStyle(fontFamily: "Popmagic", fontSize: fontsize)),
+        value: 50,
       ))
       ..add(DropdownMenuItem(
-        child: Text('50% OFF', style: TextStyle(fontSize: fontsize)),
-        value: 50,
+        child: Text('60% OFF',
+            style: TextStyle(fontFamily: "Popmagic", fontSize: fontsize)),
+        value: 60,
+      ))
+      ..add(DropdownMenuItem(
+        child: Text('70% OFF',
+            style: TextStyle(fontFamily: "Popmagic", fontSize: fontsize)),
+        value: 70,
+      ))
+      ..add(DropdownMenuItem(
+        child: Text('80% OFF',
+            style: TextStyle(fontFamily: "Popmagic", fontSize: fontsize)),
+        value: 80,
       ));
   }
 
