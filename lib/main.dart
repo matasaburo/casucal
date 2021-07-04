@@ -18,7 +18,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'CasuCal',
-        theme: appTheme,
+//        theme: appTheme,
+        theme: ThemeData(
+          fontFamily: "Popmagic",
+        ),
         initialRoute: '/',
         routes: {
           '/': (context) => MyCart(),

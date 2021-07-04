@@ -158,6 +158,14 @@ class CartModel extends ChangeNotifier {
                     Navigator.pop(context, item.category);
                   },
                 ),
+                SimpleDialogOption(
+                  child: Icon(Icons.card_giftcard_rounded),
+                  onPressed: () {
+                    item.category = 'other';
+                    notifyListeners();
+                    Navigator.pop(context, item.category);
+                  },
+                ),
               ],
             ),
           ],
