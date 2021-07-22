@@ -78,6 +78,22 @@ class CartList extends StatefulWidget {
 
 class _CartList extends State<CartList> {
   @override
+  void initState() {
+    super.initState();
+    // var cart = context.read<CartModel>();
+    // cart.add(
+    //   Item(
+    //     category: "other",
+    //     price: 0,
+    //     discount: 0,
+    //     discount2: 0,
+    //     isPicked: true,
+    //     priceController: TextEditingController(),
+    //   ),
+    // );
+  }
+
+  @override
   Widget build(BuildContext context) {
     // CartModelの現在の状態を取得し、CartModelの状態が変化したら
     // このWidgetをリビルドするようFlutterに伝える。
@@ -107,14 +123,16 @@ class _AddItemButton extends StatelessWidget {
     return FloatingActionButton(
       backgroundColor: Colors.pink[500],
       onPressed: () {
-        cart.add(Item(
-          category: "other",
-          price: 0,
-          discount: 0,
-          isPicked: true,
-          priceController: TextEditingController(),
-          // discountController: TextEditingController(),
-        ));
+        cart.add(
+          Item(
+            category: "other",
+            price: 0,
+            discount: 0,
+            discount2: 0,
+            isPicked: true,
+            priceController: TextEditingController(),
+          ),
+        );
       },
       child: Icon(
         Icons.add_shopping_cart_rounded,
@@ -180,7 +198,7 @@ class _ItemRow extends State<_ItemRowStatefullWidget> {
             ),
           ),
           Container(
-            width: 0.5 * size.width,
+            width: 0.36 * size.width,
             height: rowHeight,
             child: TextFormField(
               controller: cart.items[index].priceController,
@@ -196,37 +214,71 @@ class _ItemRow extends State<_ItemRowStatefullWidget> {
               decoration: InputDecoration(
                 prefixText: '¥',
                 suffixText: '-',
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.pink,
-                  ),
-                ),
-                // prefixIcon: Text('￥'),
+                border: OutlineInputBorder(),
               ),
               onChanged: (price) {
-//                (price);
                 cart.setItemPrice(cart.items[index], price);
               },
             ),
           ),
+          SizedBox(
+            width: 0.02 * size.width,
+          ),
           Container(
-            width: 0.3 * size.width,
+            width: 0.2 * size.width,
             height: rowHeight,
-//            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.0),
+              border: Border.all(
+                color: Colors.grey.shade500,
+                style: BorderStyle.solid,
+                width:1,
+              ),
+            ),
             child: DropdownButtonFormField<int>(
               value: cart.items[index].discount,
               icon: const Icon(Icons.arrow_drop_down),
-              iconSize: 0,
+              iconSize: 36,
               elevation: 4,
               style: TextStyle(
                 color: Colors.red,
-                fontSize: fontSize,
               ),
               decoration: InputDecoration(
-                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
               ),
               onChanged: (discount) {
                 cart.setItemDiscount(cart.items[index], discount);
+              },
+              items: _discountList,
+            ),
+          ),
+          SizedBox(
+            width: 0.02 * size.width,
+          ),
+          Container(
+            width: 0.2 * size.width,
+            height: rowHeight,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.0),
+              border: Border.all(
+                color: Colors.grey.shade500,
+                style: BorderStyle.solid,
+                width:1,
+              ),
+            ),
+            child: DropdownButtonFormField<int>(
+              value: cart.items[index].discount2,
+              // icon: const Icon(Icons.arrow_drop_down),
+              iconSize: 36,
+              elevation: 4,
+              decoration: InputDecoration(
+                enabledBorder: InputBorder.none,
+              ),
+              style: TextStyle(
+                color: Colors.red,
+              ),
+              onChanged: (discount) {
+                cart.setItemDiscount2(cart.items[index], discount);
               },
               items: _discountList,
             ),
@@ -253,57 +305,57 @@ class _ItemRow extends State<_ItemRowStatefullWidget> {
   }
 
   void setDiscountList() {
-    double fontsize = 20.0;
+    double fontSize = 20.0;
     var _font = 'Lobster';
     _discountList
       ..add(DropdownMenuItem(
         child: Text('0% OFF',
-            style: TextStyle(fontFamily: _font, fontSize: fontsize)),
+            style: TextStyle(fontFamily: _font, fontSize: fontSize)),
         value: 0,
       ))
       ..add(DropdownMenuItem(
         child: Text('10% OFF',
-            style: TextStyle(fontFamily: _font, fontSize: fontsize)),
+            style: TextStyle(fontFamily: _font, fontSize: fontSize)),
         value: 10,
       ))
       ..add(DropdownMenuItem(
         child: Text('15% OFF',
-            style: TextStyle(fontFamily: _font, fontSize: fontsize)),
+            style: TextStyle(fontFamily: _font, fontSize: fontSize)),
         value: 15,
       ))
       ..add(DropdownMenuItem(
         child: Text('20% OFF',
-            style: TextStyle(fontFamily: _font, fontSize: fontsize)),
+            style: TextStyle(fontFamily: _font, fontSize: fontSize)),
         value: 20,
       ))
       ..add(DropdownMenuItem(
         child: Text('30% OFF',
-            style: TextStyle(fontFamily: _font, fontSize: fontsize)),
+            style: TextStyle(fontFamily: _font, fontSize: fontSize)),
         value: 30,
       ))
       ..add(DropdownMenuItem(
         child: Text('40% OFF',
-            style: TextStyle(fontFamily: _font, fontSize: fontsize)),
+            style: TextStyle(fontFamily: _font, fontSize: fontSize)),
         value: 40,
       ))
       ..add(DropdownMenuItem(
         child: Text('50% OFF',
-            style: TextStyle(fontFamily: _font, fontSize: fontsize)),
+            style: TextStyle(fontFamily: _font, fontSize: fontSize)),
         value: 50,
       ))
       ..add(DropdownMenuItem(
         child: Text('60% OFF',
-            style: TextStyle(fontFamily: _font, fontSize: fontsize)),
+            style: TextStyle(fontFamily: _font, fontSize: fontSize)),
         value: 60,
       ))
       ..add(DropdownMenuItem(
         child: Text('70% OFF',
-            style: TextStyle(fontFamily: _font, fontSize: fontsize)),
+            style: TextStyle(fontFamily: _font, fontSize: fontSize)),
         value: 70,
       ))
       ..add(DropdownMenuItem(
         child: Text('80% OFF',
-            style: TextStyle(fontFamily: _font, fontSize: fontsize)),
+            style: TextStyle(fontFamily: _font, fontSize: fontSize)),
         value: 80,
       ));
   }

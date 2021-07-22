@@ -6,10 +6,9 @@ class CartModel extends ChangeNotifier {
   List<Item> _items = <Item>[];
   List<Item> get items => _items;
   int get sumPrice => _calcSumPrice();
-  int get sumDiscount => _calcSumDiscount();
   int get sumDiscountedPrice => _calcSumDisPrice();
 
-  void add(Item item) {
+  Future<void> add(Item item) async {
     _items.add(item);
     notifyListeners();
   }
@@ -44,6 +43,11 @@ class CartModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setItemDiscount2(Item item, final discount) {
+    item.discount2 = discount;
+    notifyListeners();
+  }
+
   void changePickUp(Item item) {
     item.isPicked = !item.isPicked;
     notifyListeners();
@@ -59,18 +63,17 @@ class CartModel extends ChangeNotifier {
     return sumPrice;
   }
 
-  int _calcSumDiscount() {
-    int sumDiscount = 0;
+  int _calcSumDisPrice() {
+    var sumDiscount = 0;
     for (int i = 0; i < this.items.length; i++) {
       if (_items[i].isPicked) {
-        sumDiscount += (_items[i].price * _items[i].discount / 100).round();
+        var _discountedPrice = _items[i].price
+            * (1 - _items[i].discount / 100)
+            * (1 - _items[i].discount2 / 100);
+        sumDiscount += _discountedPrice.round();
       }
     }
     return sumDiscount;
-  }
-
-  int _calcSumDisPrice() {
-    return _calcSumPrice() - _calcSumDiscount();
   }
 
 // helper functions
