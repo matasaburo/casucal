@@ -16,9 +16,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'CasuCal',
-//        theme: appTheme,S
         theme: ThemeData(
-//          fontFamily: "Popmagic",
           fontFamily: "Lobster",
         ),
         initialRoute: '/',
